@@ -1,6 +1,5 @@
 from random_word import RandomWords
 
-# Create an instance of RandomWords
 random_words_instance= RandomWords()
 
 def enter_single_char():
@@ -29,13 +28,13 @@ def game_loop():
     word_to_guess= get_random_word()
 
     guessed_word = ["_"] * len(word_to_guess)
-    attempts = 8
+    attempts = 7
     past_guesses = []
-
     while attempts > 0 and "_" in guessed_word:
+        print(hangman_looks[7-attempts], "\n")
         print(f"Word to guess:{''.join(guessed_word)}")
         print(f"Wrong guesses:{','.join(i for i in past_guesses if i not in guessed_word)}")
-        print("Number of Attempts remaining:",attempts)
+        print("Number of Attempts remaining:",attempts,"\n")
 
         user_guess = enter_single_char()
         if user_guess in past_guesses:
@@ -50,10 +49,73 @@ def game_loop():
     elif attempts == 0:
         print(f"Game Over! The correct word was {word_to_guess}. Better Luck next time!!")
 
-'''def hangmanlook'''
+
+hangman_looks = ['''
+  |----------
+  |
+  |
+  |
+  |
+  |
+''',
+'''
+  |----------
+  |         |
+  |
+  |
+  |
+  |
+''',
+'''
+  |----------
+  |         |
+  |         ⬤
+  |
+  |
+  |
+''',
+'''
+  |----------
+  |         |
+  |         ⬤
+  |         █
+  |
+  |
+''',
+'''
+  |----------
+  |         |
+  |         ⬤
+  |         █╲
+  |
+  |
+''',
+'''
+  |----------
+  |         |
+  |         ⬤
+  |        ╱█╲
+  |
+  |
+''',
+'''
+  |----------
+  |         |
+  |         ⬤
+  |        ╱█╲
+  |          ╲ 
+  |
+''',
+'''
+  |----------
+  |         |
+  |         ⬤
+  |        ╱█╲
+  |        ╱ ╲ 
+  |
+''']
 
 game_loop()
-
 
 
 
