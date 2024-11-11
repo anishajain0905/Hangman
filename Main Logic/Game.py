@@ -157,30 +157,25 @@ class HangmanGame:
         return self.random_words_instance.get_random_word()
 
     def draw_hangman(self):
-        self.canvas.delete("all")  # Clear previous drawings
-
-        # Coordinates for hangman parts
+        self.canvas.delete("all")
+        # Clear previous drawings
         hangman_stages = [
-            [],  # Stage 0: No hangman drawn
-            [(100, 40), (80, 60), (120, 60)],  # Head (drawn as a circle)
-            [(100, 80), (100, 140)],  # Body
-            [(100, 100), (60, 80)],  # Left Arm
-            [(100, 100), (140, 80)],  # Right Arm
-            [(100, 140), (60, 160)],  # Left Leg
-            [(100, 140), (140, 160)],  # Right Leg
+            [(50, 20, 150, 20)],
+            [(100, 20, 100, 40)],
+            [(80, 40, 120, 80)],
+            [(100, 80, 100, 140)],
+            [(100, 100, 60, 80)],
+            [(100, 100, 140, 80)],
+            [(100, 140, 60, 160)],
+            [(100, 140, 140, 160)],
         ]
 
         # Draw hangman parts based on the number of attempts left
-        for i in range(1, 8 - self.attempts + 1):  # Start from 1 to skip the initial state
-            if i == 1:  # Draw the head
-                self.canvas.create_oval(80, 20, 120, 60, outline='black', width=2)
-            else:
-                if i < len(hangman_stages):
-                    for coords in hangman_stages[i]:
-                        if i == 2:  # Draw the body
-                            self.canvas.create_line(100, 60, 100, 140, fill='black', width=2)
-                        else:
-                            self.canvas.create_line(*coords, fill='black', width=2)
+        for i in range(8 - self.attempts):
+            if i == 2:  # Draw the head as an oval (3rd stage, index 2)
+                self.canvas.create_oval(*hangman_stages[i], outline='black', width=2)
+            elif i < len(hangman_stages):
+                self.canvas.create_line(*hangman_stages[i], fill='black', width=2)
 
     def process_guess(self, event):
         user_guess = self.entry.get().lower()
@@ -188,7 +183,7 @@ class HangmanGame:
 
         if len(user_guess) == 1 and user_guess.isalpha():
             if user_guess in self.past_guesses:
-                self.label.config(text="You already guessed that letter!")
+                self.label.config(text=f"Word to guess: {''.join(self.guessed_word)}\n You already guessed that letter!")
                 return
 
             self.past_guesses.append(user_guess)
@@ -202,7 +197,7 @@ class HangmanGame:
             else:
                 self.attempts -= 1
                 self.attempts_label.config(text=f"Attempts remaining: {self.attempts}")
-                self.wrong_guesses_label.config(text=f"Wrong guesses: {', '.join(self.past_guesses)}")
+                self.wrong_guesses_label.config(text=f"Wrong guesses: {', '.join(i for i in self.past_guesses if i not in self.guessed_word)}")
                 self.draw_hangman()  # Update hangman drawing
 
             if "_" not in self.guessed_word:
