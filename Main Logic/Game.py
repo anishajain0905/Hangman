@@ -1,4 +1,6 @@
 import tkinter as tk
+from doctest import master
+
 from random_word import RandomWords
 
 random_words_instance= RandomWords()
@@ -132,7 +134,7 @@ class HangmanGame:
         self.past_guesses = []
 
         # Create a canvas for the hangman drawing
-        self.canvas = tk.Canvas(master, width=200, height=200)
+        self.canvas = tk.Canvas(master, width=500, height=500)
         self.canvas.pack()
 
         self.label = tk.Label(master, text=f"Word to guess: {''.join(self.guessed_word)}")
@@ -173,9 +175,9 @@ class HangmanGame:
         # Draw hangman parts based on the number of attempts left
         for i in range(8 - self.attempts):
             if i == 2:  # Draw the head as an oval (3rd stage, index 2)
-                self.canvas.create_oval(*hangman_stages[i], outline='black', width=2)
+                self.canvas.create_oval(*hangman_stages[i], outline='black', width=5)
             elif i < len(hangman_stages):
-                self.canvas.create_line(*hangman_stages[i], fill='black', width=2)
+                self.canvas.create_line(*hangman_stages[i], fill='blue', width=5)
 
     def process_guess(self, event):
         user_guess = self.entry.get().lower()
