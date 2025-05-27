@@ -124,6 +124,8 @@ class HangmanGame:
         self.master = master
         self.random_words_instance = RandomWords()
         self.word_to_guess = self.get_random_word()
+        self.title_label = tk.Label(master, text="Hangman", font=("Pacifico", 24, "bold"))
+        self.title_label.pack(pady=5)
 
         if not self.word_to_guess:
             print("Failed to retrieve a random word.")
@@ -134,23 +136,23 @@ class HangmanGame:
         self.past_guesses = []
 
         # Create a canvas for the hangman drawing
-        self.canvas = tk.Canvas(master, width=500, height=500)
-        self.canvas.pack()
+        self.canvas = tk.Canvas(master, width=1000, height=500)
+        self.canvas.pack(expand=True)
 
-        self.label = tk.Label(master, text=f"Word to guess: {''.join(self.guessed_word)}")
+        self.label = tk.Label(master, text=f"Word to guess: {''.join(self.guessed_word)}", font=("TimesNewRoman",16,"bold"))
         self.label.pack()
 
-        self.guess_label = tk.Label(master, text="Enter a letter:")
+        self.guess_label = tk.Label(master, text="Enter a letter:",font=("TimesNewRoman",14))
         self.guess_label.pack()
 
         self.entry = tk.Entry(master)
         self.entry.pack()
         self.entry.bind('<Return>', self.process_guess)
 
-        self.attempts_label = tk.Label(master, text=f"Attempts remaining: {self.attempts}")
+        self.attempts_label = tk.Label(master, text=f"Attempts remaining: {self.attempts}",font=("TimesNewRoman",14))
         self.attempts_label.pack()
 
-        self.wrong_guesses_label = tk.Label(master, text="Wrong guesses: ")
+        self.wrong_guesses_label = tk.Label(master, text="Wrong guesses: ",font=("TimesNewRoman",14))
         self.wrong_guesses_label.pack()
 
         self.draw_hangman()  # Draw the initial state
@@ -161,23 +163,23 @@ class HangmanGame:
     def draw_hangman(self):
         self.canvas.delete("all")
         # Clear previous drawings
-        hangman_stages = [
-            [(50, 20, 150, 20)],
-            [(100, 20, 100, 40)],
-            [(80, 40, 120, 80)],
-            [(100, 80, 100, 140)],
-            [(100, 100, 60, 80)],
-            [(100, 100, 140, 80)],
-            [(100, 140, 60, 160)],
-            [(100, 140, 140, 160)],
+        hangman_stages =[
+            [(300, 100, 700, 100)],  # Top horizontal beam (centered)
+            [(500, 100, 500, 200)],  # Vertical beam (middle)
+            [(450, 200, 550, 300)],  # Head (use oval for round shape)
+            [(500, 300, 500, 400)],  # Body
+            [(500, 350, 450, 300)],  # Left arm
+            [(500, 350, 550, 300)],  # Right arm
+            [(500, 400, 450, 500)],  # Left leg
+            [(500, 400, 550, 500)],  # Right leg
         ]
 
         # Draw hangman parts based on the number of attempts left
         for i in range(8 - self.attempts):
             if i == 2:  # Draw the head as an oval (3rd stage, index 2)
-                self.canvas.create_oval(*hangman_stages[i], outline='black', width=5)
+                self.canvas.create_oval(*hangman_stages[i], outline='#99856e', width=5)
             elif i < len(hangman_stages):
-                self.canvas.create_line(*hangman_stages[i], fill='blue', width=5)
+                self.canvas.create_line(hangman_stages[i], fill='#bfa68a', width=5)
 
     def process_guess(self, event):
         user_guess = self.entry.get().lower()
@@ -195,7 +197,7 @@ class HangmanGame:
                 for i in range(len(self.word_to_guess)):
                     if self.word_to_guess[i] == user_guess:
                         self.guessed_word[i] = user_guess
-                self.label.config(text=f"Word to guess: {''.join(self.guessed_word)}")
+                self.label.config(text=f"Word to guess: {''.join(self.guessed_word)}",font="TimesNewRoman")
             else:
                 self.attempts -= 1
                 self.attempts_label.config(text=f"Attempts remaining: {self.attempts}")
