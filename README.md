@@ -8,5 +8,5 @@ Planned upgrades include multiplayer modes, leaderboards, and a unique “Quizma
 
 **Tech used:**  
 - Python (fully self-coded)  
-- Tkinter (adapted from open-source resources to match my design vision)  
+- Tkinter (adapted from open-source & other resources to match my design vision)  
 
