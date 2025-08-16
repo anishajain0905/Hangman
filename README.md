@@ -19,5 +19,5 @@ Download the code and run it locally to play!🎮📩
 2. Make sure Python 3 is installed.
 
 3. Open a terminal/command prompt and run
-    >>> python hangman.py
+    python hangman.py
 
