@@ -8,5 +8,16 @@ Planned upgrades include multiplayer modes, leaderboards, and a unique “Quizma
 
 **Tech used:**  
 - Python (fully self-coded)  
-- Tkinter (adapted from open-source & other resources to match my design vision)  
+- Tkinter (adapted from open-source & other resources to match my design vision)
+
+Download the code and run it locally to play!🎮📩
+
+🖇️step-by-step mini guide:
+
+1. Download the hangman.py file.
+
+2. Make sure Python 3 is installed.
+
+3. Open a terminal/command prompt and run
+    >>> python hangman.py
 
